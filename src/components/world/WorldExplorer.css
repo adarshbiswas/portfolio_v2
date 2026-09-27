@@ -1,0 +1,114 @@
+.world-explorer {
+  --explorer-ink: #e0eada;
+  --explorer-muted: #a8bcb5;
+  --explorer-accent: #b4df82;
+  position: relative;
+  isolation: isolate;
+  align-self: center;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--explorer-ink);
+  background: #102122;
+  border: 1px solid #60756870;
+  border-radius: 5px;
+  box-shadow: 0 24px 75px #0005, 0 0 0 5px #8da79509;
+  text-align: left;
+  font-family: inherit;
+}
+
+.world-explorer[data-night='true'] { background: #0a151c; }
+.world-explorer__header,
+.world-explorer__readout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: 10px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: 1px;
+  color: var(--explorer-muted);
+}
+.world-explorer__header {
+  padding: 13px 17px;
+  border-bottom: 1px solid #8daa832b;
+}
+.world-explorer__label { display: inline-flex; align-items: center; gap: 8px; color: var(--explorer-accent); }
+.world-explorer__label i { width: 6px; height: 6px; background: currentColor; box-shadow: 0 0 12px #b4df8250; }
+.world-explorer__viewport {
+  position: relative;
+  height: 470px;
+  width: 100%;
+  overflow: hidden;
+  /* No wheel handler, preventDefault, or touch capture: native scrolling wins. */
+  touch-action: pan-y pinch-zoom;
+}
+.world-explorer__canvas { position: absolute; inset: 0; touch-action: pan-y pinch-zoom; }
+.world-explorer__canvas canvas { display: block; touch-action: pan-y pinch-zoom; }
+.world-explorer__caption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 45px 20px 17px;
+  display: grid;
+  gap: 5px;
+  pointer-events: none;
+  background: linear-gradient(transparent, #0a151cbf);
+}
+.world-explorer__caption span:first-child { font: 11px/1.4 ui-monospace, Consolas, monospace; letter-spacing: 2.2px; color: #e2ebd3; }
+.world-explorer__caption span:last-child { color: #bdcdc0; font-size: 11px; }
+.world-explorer__console { padding: 14px 16px 0; border-top: 1px solid #8daa832b; }
+.world-explorer__readout { font-size: 9px; margin-bottom: 11px; }
+.world-explorer__hint { letter-spacing: 0; text-align: right; }
+.world-explorer__controls { display: flex; flex-wrap: wrap; gap: 7px; }
+.world-explorer__controls button,
+.world-explorer__fallback .world-controls button {
+  min-height: 36px;
+  padding: 8px 11px;
+  border: 1px solid #92b29a45;
+  border-radius: 3px;
+  background: #a2c4a30a;
+  color: var(--explorer-ink);
+  font: 11px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: 0;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.world-explorer__controls button:hover:not(:disabled),
+.world-explorer__fallback .world-controls button:hover { background: #b4df8219; border-color: #b4df82a0; }
+.world-explorer button:focus-visible { outline: 2px solid #d8f6ab; outline-offset: 3px; }
+.world-explorer__controls button:disabled { opacity: 0.65; cursor: not-allowed; }
+.world-explorer__landmarks { margin-top: 8px; }
+.world-explorer__landmarks button { border-color: transparent; padding-inline: 5px; color: var(--explorer-muted); }
+.world-explorer__landmarks button span { color: var(--explorer-accent); margin-left: 7px; }
+.world-explorer__status { margin: 0; padding: 10px 17px 13px; color: var(--explorer-muted); font: 10px/1.5 ui-monospace, Consolas, monospace; }
+
+/* Contain the existing illustration without depending on its page positioning. */
+.world-explorer__fallback { width: 100%; height: 100%; }
+.world-explorer__fallback .world-wrap { display: flex; flex-direction: column; width: 100%; height: 100%; padding: 12px; margin: 0; box-sizing: border-box; }
+.world-explorer__fallback .world-scene { flex: 1; min-height: 0; margin: 0; display: grid; place-items: center; }
+.world-explorer__fallback .voxel-world { max-width: 100%; width: auto; height: 100%; max-height: 370px; overflow: hidden; }
+.world-explorer__fallback .world-label { display: none; }
+.world-explorer__fallback .world-controls { flex-shrink: 0; margin: 0; color: var(--explorer-muted); }
+.world-explorer__fallback .floating-island { animation: none; }
+.world-explorer__fallback .world-orbit,
+.world-explorer__fallback .world-spark,
+.world-explorer__fallback .scene-badge { display: none; }
+
+@media (max-width: 640px) {
+  .world-explorer__viewport { height: 350px; }
+  .world-explorer__header { padding-inline: 12px; font-size: 9px; }
+  .world-explorer__console { padding-inline: 12px; }
+  .world-explorer__controls button { min-height: 44px; padding: 9px; font-size: 10px; }
+  .world-explorer__readout { flex-wrap: wrap; gap: 4px 10px; }
+  .world-explorer__fallback .voxel-world { max-height: 275px; }
+}
+@media (pointer: coarse) {
+  .world-explorer__hint { display: none; }
+  .world-explorer__controls button { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .world-explorer *, .world-explorer *::before, .world-explorer *::after { animation: none !important; transition: none !important; }
+}
+@media (forced-colors: active) {
+  .world-explorer { border-color: CanvasText; box-shadow: none; }
+  .world-explorer__controls button, .world-explorer__fallback .world-controls button { border: 1px solid ButtonText; }
+  .world-explorer button:focus-visible { outline-color: Highlight; }
+}

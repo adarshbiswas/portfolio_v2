@@ -1,0 +1,57 @@
+.character-studio { --studio-text: #e2eee6; --studio-muted: #a8bdb7; --studio-accent: #b4df82; --studio-line: #476370; --studio-button: #20373b; --studio-hover: #34574b; --studio-glow: #34544c80; overflow: hidden; isolation: isolate; border: 1px solid var(--studio-line); background: #0b1928; color: var(--studio-text); box-shadow: 5px 5px #050b1244; }
+.character-studio__header { display: flex; justify-content: space-between; gap: 8px; padding: 12px 15px; font: 9px var(--mono); letter-spacing: 1px; border-bottom: 1px solid #2b414d; color: #a9bbb9; }
+.character-studio__header > span:first-child { color: #b4df82; }
+.character-studio__header i { display: inline-block; width: 6px; height: 6px; margin-right: 6px; background: #b4df82; }
+.character-stage { position: relative; background: radial-gradient(ellipse at 50% 45%, #34544c80, transparent 68%); touch-action: pan-y pinch-zoom; }
+.character-stage::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#70918509 1px, transparent 1px), linear-gradient(90deg, #70918509 1px, transparent 1px); background-size: 24px 24px; pointer-events: none; }
+.character-rig { width: 100%; height: 355px; display: block; overflow: visible; touch-action: pan-y pinch-zoom; }
+.character-stage__tag { position: absolute; top: 17px; left: 16px; color: #8aa79f; font: 8px/1.8 var(--mono); letter-spacing: 1px; pointer-events: none; }
+.character-stage__tag b { font-weight: normal; color: #d3d5ad; }
+.character-stage__mode { position: absolute; right: 13px; bottom: 9px; color: #92b6a2; font: 8px var(--mono); pointer-events: none; }
+/* Capture only deliberate gestures on joints, not the surrounding scroll area. */
+.character-joint { touch-action: none; outline: none; }
+.character-joint > g, .character-joint > path { pointer-events: none; }
+.joint-target { pointer-events: all; }
+.joint-outline { stroke: #b9f1b8; stroke-width: 2; stroke-dasharray: 5 4; opacity: 0; pointer-events: none; }
+.joint-pivot { fill: #ecdc8b; opacity: 0; }
+.character-joint[data-selected='true'] .joint-outline { opacity: .65; }
+.character-joint:hover .joint-outline, .character-joint:focus-visible .joint-outline { opacity: 1; stroke-dasharray: none; stroke-width: 3; }
+.character-joint[data-selected='true'] .joint-pivot, .character-joint:focus-visible .joint-pivot { opacity: 1; }
+.character-controls { padding: 13px 15px 15px; border-top: 1px solid #2b414d; }
+.character-controls > p { margin: 0 0 10px; font-size: 11px; color: #a8bdb7; line-height: 1.6; }
+.character-controls__adjust { display: flex; align-items: center; gap: 9px; }
+.character-controls__adjust label { min-width: 94px; font: 18px var(--pixel); }
+.character-controls__adjust output { display: block; color: #b4df82; font: 10px var(--mono); margin-top: 3px; }
+.character-controls__adjust input { min-width: 0; width: 100%; accent-color: #9dcc8c; height: 44px; }
+.character-controls button { color: #e2eee6; border: 1px solid #60756d; background: #20373b; box-shadow: inset 1px 1px #ffffff12, inset -1px -1px #0004; font: 18px var(--pixel); min-height: 44px; padding: 7px 11px; }
+.character-controls button:hover:not(:disabled) { background: #34574b; border-color: #b4df82; }
+.character-controls button:disabled { opacity: .45; }
+.character-controls__adjust button { flex: 0 0 36px; }
+.character-controls__presets { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.character-controls__presets button { flex: 1 1 auto; }
+.character-controls :focus-visible { outline: 3px solid #d2eca9; outline-offset: 3px; }
+.character-studio[data-night='false'] { --studio-text: #233e32; --studio-muted: #50695b; --studio-accent: #316b43; --studio-line: #99b098; --studio-button: #e3ecda; --studio-hover: #d0e3c5; --studio-glow: #88ad7126; background: #e2ebdb; box-shadow: 5px 5px #9baa9622; }
+.character-studio__header { color: var(--studio-muted); border-color: var(--studio-line); }
+.character-studio__header > span:first-child, .character-controls__adjust output { color: var(--studio-accent); }
+.character-studio__header i { background: var(--studio-accent); }
+.character-stage { background: radial-gradient(ellipse at 50% 45%, var(--studio-glow), transparent 68%); }
+.character-stage__tag, .character-stage__mode, .character-controls > p { color: var(--studio-muted); }
+.character-stage__tag b { color: var(--studio-accent); }
+.character-controls { border-color: var(--studio-line); }
+.character-controls button { color: var(--studio-text); background: var(--studio-button); border-color: var(--studio-line); }
+.character-controls button:hover:not(:disabled) { background: var(--studio-hover); border-color: var(--studio-accent); }
+.character-controls__adjust input { accent-color: var(--studio-accent); }
+.character-controls :focus-visible { outline-color: var(--studio-accent); }
+.character-studio[data-night='false'] .joint-outline { stroke: #285f40; }
+.character-studio, .character-studio__header, .character-controls, .character-controls button { transition: background-color var(--theme-transition), color var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition); }
+.character-stage__tag, .character-stage__tag b, .character-stage__mode, .character-controls > p, .character-controls__adjust output { transition: color var(--theme-transition); }
+/* Desktop uses the introduction's shared sky, not a second framed panel. */
+@media (min-width: 1101px) {
+	.character-studio, .character-studio[data-night='false'] { border: 0; background: transparent; box-shadow: none; }
+	.character-studio__header, .character-controls { border: 0; }
+	.character-stage { background: transparent; }
+	.character-stage::before { display: none; }
+}
+@media (max-width: 950px) { .character-rig { height: 320px; }.character-controls { padding-inline: 10px; }.character-controls__adjust { gap: 6px; }.character-controls__adjust label { min-width: 72px; }.character-controls button { font-size: 16px; padding-inline: 8px; } }
+@media (max-width: 480px) { .character-rig { height: 300px; }.character-stage__tag { font-size: 7px; left: 10px; }.character-studio__header { font-size: 8px; padding-inline: 10px; }.character-controls > p { font-size: 10px; } }
+@media (forced-colors: active) { .character-studio { border-color: CanvasText; }.character-controls button { border-color: ButtonText; }.joint-outline { stroke: Highlight; }.character-controls :focus-visible { outline-color: Highlight; } }
